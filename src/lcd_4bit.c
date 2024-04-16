@@ -80,10 +80,22 @@ void lcd_clear(void) {
 }
 
 void lcd_set_cursor(unsigned char x, unsigned char y) {
-  unsigned char xy = x+y * 0x40;
+  unsigned char xy = x + y * 0x40;
   lcd_cmd((xy | 0x80));
 }
 
-void lcd_print(char * str) {
-  while (*str) lcd_data(*str++);
+void lcd_move_cursor_left(void) {
+  lcd_cmd( HD44780_DISPLAY_CURSOR_SHIFT | HD44780_SHIFT_CURSOR | HD44780_SHIFT_LEFT );
+}
+
+void lcd_move_cursor_right(void) {
+  lcd_cmd( HD44780_DISPLAY_CURSOR_SHIFT | HD44780_SHIFT_CURSOR | HD44780_SHIFT_RIGHT );
+}
+
+void lcd_print_char(char data) {
+  lcd_data(data);
+}
+
+void lcd_print_str(char *data) {
+  while (*data) lcd_data(*data++);
 }
